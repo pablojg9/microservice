@@ -1,8 +1,8 @@
-package io.github.pablojg9.product.modules.product.controller;
+package io.github.pablojg9.product.modules.category.controller;
 
-import io.github.pablojg9.product.modules.product.dto.CategoryRequest;
-import io.github.pablojg9.product.modules.product.dto.CategoryResponse;
-import io.github.pablojg9.product.modules.product.service.CategoryService;
+import io.github.pablojg9.product.modules.category.dto.CategoryRequest;
+import io.github.pablojg9.product.modules.category.dto.CategoryResponse;
+import io.github.pablojg9.product.modules.category.service.CategoryService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

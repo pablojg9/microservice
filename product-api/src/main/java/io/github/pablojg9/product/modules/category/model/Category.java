@@ -1,6 +1,6 @@
-package io.github.pablojg9.product.modules.product.model;
+package io.github.pablojg9.product.modules.category.model;
 
-import io.github.pablojg9.product.modules.product.dto.CategoryRequest;
+import io.github.pablojg9.product.modules.category.dto.CategoryRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,5 +32,4 @@ public class Category {
         BeanUtils.copyProperties(request, Category);
         return Category;
     }
-
 }

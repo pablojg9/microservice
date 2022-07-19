@@ -1,10 +1,10 @@
-package io.github.pablojg9.product.modules.product.service;
+package io.github.pablojg9.product.modules.category.service;
 
 import io.github.pablojg9.product.config.exception.ValidationException;
-import io.github.pablojg9.product.modules.product.dto.CategoryRequest;
-import io.github.pablojg9.product.modules.product.dto.CategoryResponse;
-import io.github.pablojg9.product.modules.product.model.Category;
-import io.github.pablojg9.product.modules.product.repository.CategoryRepository;
+import io.github.pablojg9.product.modules.category.dto.CategoryRequest;
+import io.github.pablojg9.product.modules.category.dto.CategoryResponse;
+import io.github.pablojg9.product.modules.category.model.Category;
+import io.github.pablojg9.product.modules.category.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,12 @@ public class CategoryService {
     @Autowired
     public CategoryService(CategoryRepository categoryRepository){
         this.categoryRepository = categoryRepository;
+    }
+
+    public Category findById(Integer id) {
+        return categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ValidationException("There's no supplier for the given ID"));
     }
 
     public CategoryResponse save(CategoryRequest categoryRequest) {

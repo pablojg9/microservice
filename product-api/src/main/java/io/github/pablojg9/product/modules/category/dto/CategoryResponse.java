@@ -1,6 +1,6 @@
-package io.github.pablojg9.product.modules.product.dto;
+package io.github.pablojg9.product.modules.category.dto;
 
-import io.github.pablojg9.product.modules.product.model.Category;
+import io.github.pablojg9.product.modules.category.model.Category;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -15,5 +15,4 @@ public class CategoryResponse {
         BeanUtils.copyProperties(category, categoryResponse);
         return categoryResponse;
     }
-
 }

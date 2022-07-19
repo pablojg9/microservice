@@ -1,8 +1,10 @@
-package io.github.pablojg9.product.modules.product.model;
+package io.github.pablojg9.product.modules.supplier.model;
 
+import io.github.pablojg9.product.modules.supplier.dto.SupplierRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,4 +27,9 @@ public class Supplier {
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    public static Supplier of(SupplierRequest supplierRequest) {
+        var response = new Supplier();
+        BeanUtils.copyProperties(supplierRequest, response);
+        return response;
+    }
 }

@@ -1,4 +1,4 @@
-package io.github.pablojg9.product.modules.product.dto;
+package io.github.pablojg9.product.modules.category.dto;
 
 import lombok.Data;
 
@@ -6,5 +6,4 @@ import lombok.Data;
 public class CategoryRequest {
 
     private String description;
-
 }
