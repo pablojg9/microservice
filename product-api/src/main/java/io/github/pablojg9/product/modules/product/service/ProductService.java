@@ -7,26 +7,20 @@ import io.github.pablojg9.product.modules.product.dto.ProductResponse;
 import io.github.pablojg9.product.modules.product.model.Product;
 import io.github.pablojg9.product.modules.product.repository.ProductRepository;
 import io.github.pablojg9.product.modules.supplier.service.SupplierService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductService {
 
     private static final Integer ZERO = 0;
     private final ProductRepository productRepository;
     private final SupplierService supplierService;
     private final CategoryService categoryService;
-
-
-    @Autowired
-    public ProductService(ProductRepository productRepository, SupplierService supplierService, CategoryService categoryService) {
-        this.productRepository = productRepository;
-        this.supplierService = supplierService;
-        this.categoryService = categoryService;
-    }
 
     public ProductResponse save(ProductRequest request) {
         validateProductDataInformed(request);

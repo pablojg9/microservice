@@ -5,20 +5,17 @@ import io.github.pablojg9.product.modules.supplier.dto.SupplierRequest;
 import io.github.pablojg9.product.modules.supplier.dto.SupplierResponse;
 import io.github.pablojg9.product.modules.supplier.model.Supplier;
 import io.github.pablojg9.product.modules.supplier.repository.SupplierRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SupplierService {
 
     private final SupplierRepository supplierRepository;
-
-    @Autowired
-    public SupplierService(SupplierRepository supplierRepository) {
-        this.supplierRepository = supplierRepository;
-    }
 
     public Supplier findById(Integer id) {
         return supplierRepository
