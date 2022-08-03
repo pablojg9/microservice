@@ -1,10 +1,12 @@
 package io.github.pablojg9.product.modules.product.controller;
 
+import io.github.pablojg9.product.config.exception.SuccessResponse;
 import io.github.pablojg9.product.modules.product.dto.ProductRequest;
 import io.github.pablojg9.product.modules.product.dto.ProductResponse;
 import io.github.pablojg9.product.modules.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,12 +44,17 @@ public class ProductController {
     }
 
     @GetMapping("categoryId/{categoryId}")
-    public List<ProductResponse> findByCategoryId(Integer categoryId) {
+    public List<ProductResponse> findByCategoryId(@PathVariable Integer categoryId) {
         return productService.findByCategoryId(categoryId);
     }
 
     @GetMapping("supplierId/{supplierId}")
     public List<ProductResponse> findBySupplierId(@PathVariable Integer supplierId) {
         return productService.findBySupplierId(supplierId);
+    }
+
+    @DeleteMapping("{id}")
+    public SuccessResponse deleteById(@PathVariable Integer id) {
+        return productService.deleteById(id);
     }
 }

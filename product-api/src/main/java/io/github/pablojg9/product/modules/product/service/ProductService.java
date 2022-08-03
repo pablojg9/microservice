@@ -1,5 +1,6 @@
 package io.github.pablojg9.product.modules.product.service;
 
+import io.github.pablojg9.product.config.exception.SuccessResponse;
 import io.github.pablojg9.product.config.exception.ValidationException;
 import io.github.pablojg9.product.modules.category.service.CategoryService;
 import io.github.pablojg9.product.modules.product.dto.ProductRequest;
@@ -90,6 +91,26 @@ public class ProductService {
                 .map(ProductResponse::of)
                 .collect(Collectors.toList());
     }
+    
+    public Boolean existsByCategoryId(Integer categoryId) {
+        return productRepository.existsByCategoryId(categoryId);
+    }
+
+    public Boolean existsBySupplierId(Integer supplierId) {
+        return productRepository.existsBySupplierId(supplierId);
+    }
+
+    public SuccessResponse deleteById(Integer id) {
+        validateInformedId(id);
+        productRepository.deleteById(id);
+        return SuccessResponse.create("The product was delete");
+    }
+
+    private void validateInformedId(Integer id) {
+        if (isEmpty(id)){
+            throw new ValidationException("The product' supplier id not informed.");
+        }
+    }
 
     private void validateProductDataInformed(ProductRequest productRequest) {
         if (isEmpty(productRequest.getName())) {
@@ -114,4 +135,6 @@ public class ProductService {
             throw new ValidationException("The Supplier id was not informed");
         }
     }
+
+
 }
