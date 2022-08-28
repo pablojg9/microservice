@@ -7,7 +7,6 @@ import io.github.pablojg9.product.modules.category.dto.CategoryResponse;
 import io.github.pablojg9.product.modules.category.model.Category;
 import io.github.pablojg9.product.modules.category.repository.CategoryRepository;
 import io.github.pablojg9.product.modules.product.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,13 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CategoryService {
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-    private final CategoryRepository categoryRepository;
-    private final ProductService productService;
+    @Autowired
+    private ProductService productService;
+
 
     public List<CategoryResponse> findAll() {
         return categoryRepository
@@ -76,10 +77,18 @@ public class CategoryService {
         }
     }
 
-
     public CategoryResponse save(CategoryRequest categoryRequest) {
         validateCategoryNameInformed(categoryRequest);
         Category category = categoryRepository.save(Category.of(categoryRequest));
+        return CategoryResponse.of(category);
+    }
+
+    public CategoryResponse update(CategoryRequest categoryRequest, Integer id) {
+        validateCategoryNameInformed(categoryRequest);
+        validateInformedId(id);
+        Category category = Category.of(categoryRequest);
+        category.setId(id);
+        categoryRepository.save(category);
         return CategoryResponse.of(category);
     }
 

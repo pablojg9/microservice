@@ -2,13 +2,14 @@ package io.github.pablojg9.product.modules.product.service;
 
 import io.github.pablojg9.product.config.exception.SuccessResponse;
 import io.github.pablojg9.product.config.exception.ValidationException;
+import io.github.pablojg9.product.modules.category.model.Category;
 import io.github.pablojg9.product.modules.category.service.CategoryService;
 import io.github.pablojg9.product.modules.product.dto.ProductRequest;
 import io.github.pablojg9.product.modules.product.dto.ProductResponse;
 import io.github.pablojg9.product.modules.product.model.Product;
 import io.github.pablojg9.product.modules.product.repository.ProductRepository;
+import io.github.pablojg9.product.modules.supplier.model.Supplier;
 import io.github.pablojg9.product.modules.supplier.service.SupplierService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,19 @@ import java.util.stream.Collectors;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ProductService {
 
     private static final Integer ZERO = 0;
-    private final ProductRepository productRepository;
-    private final SupplierService supplierService;
-    private final CategoryService categoryService;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private SupplierService supplierService;
+
+    @Autowired
+    private CategoryService categoryService;
+
 
     public ProductResponse save(ProductRequest request) {
         validateProductDataInformed(request);
@@ -32,6 +39,19 @@ public class ProductService {
         var category = categoryService.findById(request.getCategoryId());
         var supplier = supplierService.findById(request.getSupplierId());
         var product = productRepository.save(Product.of(request, category, supplier));
+        return ProductResponse.of(product);
+    }
+
+    public ProductResponse update(ProductRequest request, Integer id) {
+        validateProductDataInformed(request);
+        validateInformedId(id);
+        validateCategoryAndSupplierIdInformed(request);
+        Category category = categoryService.findById(request.getCategoryId());
+        Supplier supplier = supplierService.findById(request.getSupplierId());
+
+        Product product = Product.of(request, category, supplier);
+        product.setId(id);
+        productRepository.save(product);
         return ProductResponse.of(product);
     }
 
@@ -135,6 +155,4 @@ public class ProductService {
             throw new ValidationException("The Supplier id was not informed");
         }
     }
-
-
 }

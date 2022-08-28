@@ -5,6 +5,7 @@ spring:
   application:
     name: product-api
 
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/product-db
@@ -15,8 +16,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL9Dialect
         format_sql: true
+  main:
+    allow-circular-references: true

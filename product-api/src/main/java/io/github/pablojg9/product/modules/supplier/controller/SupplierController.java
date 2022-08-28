@@ -6,22 +6,20 @@ import io.github.pablojg9.product.modules.supplier.dto.SupplierResponse;
 import io.github.pablojg9.product.modules.supplier.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/supplier")
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SupplierController {
 
     private final SupplierService supplierService;
+
+    @Autowired
+    public SupplierController(SupplierService supplierService) {
+        this.supplierService = supplierService;
+    }
 
     @PostMapping
     public SupplierResponse save(@RequestBody SupplierRequest supplierRequest) {
@@ -41,6 +39,11 @@ public class SupplierController {
     @GetMapping("name/{name}")
     public List<SupplierResponse> findByName(@PathVariable String name) {
         return supplierService.findByName(name);
+    }
+
+    @PutMapping("update/{id}")
+    public SupplierResponse update(@RequestBody SupplierRequest request, @PathVariable Integer id) {
+        return supplierService.update(request, id);
     }
 
     @DeleteMapping("{id}")

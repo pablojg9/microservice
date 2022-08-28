@@ -7,7 +7,6 @@ import io.github.pablojg9.product.modules.supplier.dto.SupplierRequest;
 import io.github.pablojg9.product.modules.supplier.dto.SupplierResponse;
 import io.github.pablojg9.product.modules.supplier.model.Supplier;
 import io.github.pablojg9.product.modules.supplier.repository.SupplierRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,13 @@ import java.util.stream.Collectors;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SupplierService {
 
-    private final SupplierRepository supplierRepository;
-    private final ProductService productService;
+    @Autowired
+    private SupplierRepository supplierRepository;
+
+    @Autowired
+    private ProductService productService;
 
     public List<SupplierResponse> findAll() {
         return supplierRepository
@@ -64,6 +65,17 @@ public class SupplierService {
         return SupplierResponse.of(supplier);
     }
 
+    public SupplierResponse update(SupplierRequest supplierRequest, Integer id) {
+        validateSupplierNameInformed(supplierRequest);
+        validateInformedId(id);
+
+        Supplier supplier = Supplier.of(supplierRequest);
+        supplier.setId(id);
+        supplierRepository.save(supplier);
+
+        return SupplierResponse.of(supplier);
+    }
+
     public SuccessResponse deleteById(Integer id) {
         validateInformedId(id);
         if (productService.existsBySupplierId(id)) {
@@ -80,7 +92,6 @@ public class SupplierService {
             throw new ValidationException("The supplier ID was not informed.");
         }
     }
-
 
     private void validateSupplierNameInformed(SupplierRequest request) {
         if (isEmpty(request.getName())) {
